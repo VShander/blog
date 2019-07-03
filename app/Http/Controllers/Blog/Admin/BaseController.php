@@ -7,5 +7,8 @@ use App\Http\Controllers\Controller as GuestBaseController;
 
 abstract class BaseController extends GuestBaseController {
 
-    //
+    public function __construct()
+    {
+
+    }
 }
