@@ -39,8 +39,8 @@
                 @endphp
                 <tr @if (!$post->is_published) class="bg-secondary" @endif>
                   <td>{{ $post->id }}</td>
-                  <td>{{ $post->user_id }}</td>
-                  <td>{{ $post->category_id }}</td>
+                  <td>{{ $post->user->name}}</td>
+                  <td>{{ $post->category->title }}</td>
                   <td>
                     <a @if (!$post->is_published) class="text-white" @else  class="text-dark" @endif
                     href="{{ route('blog.admin.posts.edit', $post->id) }}">{{ $post->title }}</a>

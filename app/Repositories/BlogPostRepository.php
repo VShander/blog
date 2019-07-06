@@ -37,8 +37,14 @@ class BlogPostRepository extends CoreRepository
         $result = $this->startConditions()
             ->select($columns)
             ->orderBy('id', 'DESC')
+            ->with(['category', 'user']) // <-- Lazy load relations
             ->paginate(25);
 
         return $result;
+    }
+
+    public function getEdit($id)
+    {
+        return $this->startConditions()->find($id);
     }
 }
