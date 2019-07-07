@@ -9,6 +9,23 @@ use Illuminate\Support\Str;
 class BlogPostObserver
 {
     /**
+     * Handle the blog category "creating" event.
+     *
+     * @param  \App\Models\BlogPost  $blogPost
+     *
+     * @return void
+     */
+    public function creating(BlogPost $blogPost)
+    {
+        $this->setPublishedAt($blogPost);
+
+        $this->setAlias($blogPost);
+
+        $this->setHtml($blogPost);
+
+        $this->setUser($blogPost);
+    }
+    /**
      * Handle the blog post "created" event.
      *
      * @param  \App\Models\BlogPost  $blogPost
@@ -93,5 +110,22 @@ class BlogPostObserver
         if (empty($blogPost->alias)) {
             $blogPost->alias= Str::slug($blogPost->title);
         }
+    }
+    /**
+     *
+     */
+    protected function setHtml(BlogPost $blogPost)
+    {
+        if ($blogPost->isDirty('content_raw')) {
+            // TODO Генерация markdown -> html
+            $blogPost->content_html = $blogPost->content_raw;
+        }
+    }
+    /*
+     *
+     */
+    protected function setUser(BlogPost $blogPost)
+    {
+        $blogPost->user_id = auth()->id() ?? 1;
     }
 }
